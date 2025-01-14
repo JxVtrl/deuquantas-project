@@ -103,19 +103,4 @@ Contribuições são bem-vindas! Siga estas etapas:
 
 ---
 
-## 🗂 Links Importantes
-
-- [Documentação do Projeto](https://example.com/docs) *(substituir pelo link real, se houver)*
-- [GitHub Issues](https://github.com/seu-org/deuquantas-project/issues)
-
----
-
-## 🧑‍💻 Equipe
-
-- **Product Owner**: Nome da Pessoa
-- **Tech Lead**: Nome da Pessoa
-- **Desenvolvedores**: Lista dos Desenvolvedores
-
----
-
 Se precisar de mais informações, abra uma **issue** ou entre em contato com a equipe de desenvolvimento. 🚀
