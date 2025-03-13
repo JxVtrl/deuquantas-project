@@ -1,0 +1,16 @@
+{
+  "name": "deuquantas-project",
+  "version": "1.0.0",
+  "description": "Bem-vindo ao repositório principal do **Deu Quantas**, uma plataforma que promove transparência entre consumidores e estabelecimentos no controle de comandas. Este repositório gerencia os submódulos que compõem a aplicação, incluindo os frontends (web e mobile), backend e infraestrutura.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\"",
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^8.0.0"
+  }
+}
