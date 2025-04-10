@@ -3,7 +3,7 @@
 	url = git@github.com:JxVtrl/deuquantas-backend.git
 [submodule "frontend-web-client"]
 	path = frontend-web-client
-	url = git@github.com:JxVtrl/deuquantas-frontend-web-client.git
+	url = https://github.com/JxVtrl/deuquantas-frontend-web-client
 [submodule "frontend-web-establishment"]
 	path = frontend-web-establishment
 	url = git@github.com:JxVtrl/deuquantas-frontend-web-establishment.git
