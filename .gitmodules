@@ -1,0 +1,15 @@
+[submodule "backend"]
+	path = backend
+	url = git@github.com:JxVtrl/deuquantas-backend.git
+[submodule "frontend-web-client"]
+	path = frontend-web-client
+	url = git@github.com:JxVtrl/deuquantas-frontend-web-client.git
+[submodule "frontend-web-establishment"]
+	path = frontend-web-establishment
+	url = git@github.com:JxVtrl/deuquantas-frontend-web-establishment.git
+[submodule "infra"]
+	path = infra
+	url = git@github.com:JxVtrl/deuquantas-infra.git
+[submodule "frontend-mobile"]
+	path = frontend-mobile
+	url = git@github.com:JxVtrl/deuquantas-frontend-mobile.git
