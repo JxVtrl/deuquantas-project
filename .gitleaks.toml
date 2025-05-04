@@ -1,0 +1,52 @@
+[allowlist]
+description = "Allowlist for known false positives"
+paths = [
+    '''\.git/''',
+    '''\.github/''',
+    '''\.gitignore''',
+    '''\.env.example''',
+    '''package-lock\.json''',
+    '''yarn\.lock''',
+]
+
+[[rules]]
+id = "generic-api-key"
+description = "Generic API Key"
+regex = '''(?i)(api[_-]?key|apikey|secret)['"]?\s*[:=]\s*['"]?([a-zA-Z0-9]{32,45})['"]?'''
+tags = ["key", "API", "generic"]
+
+[[rules]]
+id = "aws-access-key"
+description = "AWS Access Key"
+regex = '''(?i)aws[_-]?access[_-]?key[_-]?id['"]?\s*[:=]\s*['"]?[A-Z0-9]{20}['"]?'''
+tags = ["key", "AWS"]
+
+[[rules]]
+id = "aws-secret-key"
+description = "AWS Secret Key"
+regex = '''(?i)aws[_-]?secret[_-]?access[_-]?key['"]?\s*[:=]\s*['"]?[A-Za-z0-9/+=]{40}['"]?'''
+tags = ["key", "AWS"]
+
+[[rules]]
+id = "google-api-key"
+description = "Google API Key"
+regex = '''(?i)(AIza[0-9A-Za-z-_]{35})'''
+tags = ["key", "Google"]
+
+[[rules]]
+id = "github-token"
+description = "GitHub Token"
+regex = '''(?i)(github[_-]token|gh[_-]token|gh[_-]pat)['"]?\s*[:=]\s*['"]?[a-zA-Z0-9_-]{40}['"]?'''
+tags = ["key", "GitHub"]
+
+[[rules]]
+id = "jwt-secret"
+description = "JWT Secret"
+regex = '''(?i)(jwt[_-]secret|jwt[_-]key)['"]?\s*[:=]\s*['"]?[a-zA-Z0-9_-]{32,}['"]?'''
+tags = ["key", "JWT"]
+
+[[rules]]
+id = "database-url"
+description = "Database URL"
+regex = '''(?i)(mongodb|postgresql|mysql|redis)://[a-zA-Z0-9_-]+:[a-zA-Z0-9_-]+@[a-zA-Z0-9.-]+:[0-9]+/[a-zA-Z0-9_-]+'''
+tags = ["key", "database"] 
