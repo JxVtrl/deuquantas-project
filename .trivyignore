@@ -1,0 +1,24 @@
+# Ignorar vulnerabilidades específicas
+CVE-2021-1234
+CVE-2021-5678
+
+# Ignorar pacotes específicos
+node_modules/*
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Ignorar diretórios de teste
+**/test/**
+**/tests/**
+**/__tests__/**
+
+# Ignorar arquivos de configuração
+.env
+.env.*
+!.env.example
+
+# Ignorar arquivos de build
+dist/
+build/
+coverage/ 

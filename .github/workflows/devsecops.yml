@@ -1,0 +1,158 @@
+name: DevSecOps Security Scan
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  # Scan de dependências com Snyk
+  snyk-backend:
+    name: Scan Backend Dependencies
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        with:
+          command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  snyk-frontend:
+    name: Scan Frontend Dependencies
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend-web-client
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        with:
+          command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  snyk-establishment:
+    name: Scan Establishment Dependencies
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend-web-establishment
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        with:
+          command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  # Scan de código com SonarQube
+  sonarqube-scan:
+    name: SonarQube Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+  # Scan de vulnerabilidades com OWASP ZAP
+  zap-baseline-scan:
+    name: OWASP ZAP Baseline Scan
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.10.0
+        with:
+          target: "https://api.deuquantas.com.br"
+          rules_file_name: ".zap/rules.tsv"
+          cmd_options: "-a"
+          fail_action: "warn"
+          scan_level: "MEDIUM"
+          threshold: "MEDIUM"
+          context_file: ".zap/context.yaml"
+          baseline_file: ".zap/baseline.tsv"
+          report_html: "zap-report.html"
+          report_md: "zap-report.md"
+          report_json: "zap-report.json"
+        env:
+          ZAP_AUTH_HEADER: ${{ secrets.ZAP_AUTH_HEADER }}
+          ZAP_AUTH_HEADER_VALUE: ${{ secrets.ZAP_AUTH_HEADER_VALUE }}
+
+  # Scan de containers com Trivy
+  trivy-scan:
+    name: Container Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "deuquantas-backend:latest"
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: "os,library"
+          severity: "CRITICAL,HIGH"
+
+  # Scan de segredos com Gitleaks
+  gitleaks-scan:
+    name: Gitleaks Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Gitleaks
+        uses: zricethezav/gitleaks-action@master
+        with:
+          config-path: .gitleaks.toml
+          redact: true
